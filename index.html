@@ -241,7 +241,7 @@
             color_cont_one.appendChild(divs);
         }
         var index = Math.floor((Math.random() * boxColor.length));
-        boxColor[index].style.opacity = 6 / 10 ;
+        boxColor[index].style.opacity = 6 / 10 +n/100;
         boxColor[index].onclick = function () {
             score++;
             h_score_one.innerHTML = score;
