@@ -70,192 +70,6 @@
 </body>
 </html>
 <script>
-    var util = {//这里面写的基本上都是各各模块公用的方法
-        timer: function () {
-            var s = 60, self = this;
-
-            function times() {
-                s--;
-                self.s = s;
-                searchRender.getElesByClass("h_time_one")[0].innerHTML = s;
-                self.t = setTimeout(times, 1000);
-                if (s <= 0) {
-                    clearTimeout(self.t);
-                    self.t = null;
-                }
-            }
-
-            this.times = times;
-            times();
-        },
-        stop: function () {
-            clearTimeout(this.t);
-            this.t = null;
-        },
-        start: function () {
-            setTimeout(this.times, 1000);
-        },
-        end: function () {
-            var self = util;
-            if (self.s <= 0) {
-                if (self.score < 15) {
-                    searchRender.getElesByClass("end_title")[0].innerHTML = "蝙蝠";
-                } else if (self.score >= 15 && self.score < 28) {
-                    searchRender.getElesByClass("end_title")[0].innerHTML = "狗";
-                } else if (self.score >= 28 && self.score < 36) {
-                    searchRender.getElesByClass("end_title")[0].innerHTML = "狮子";
-                } else if (self.score >= 36) {
-                    searchRender.getElesByClass("end_title")[0].innerHTML = "鹰";
-                }
-                searchRender.getElesByClass("end_main")[0].style.display = "block";
-                searchRender.getElesByClass("end_score_one")[0].innerHTML = self.score;
-            }
-        },
-        showOrHide:function(){
-            searchRender.getElesByClass("start_main")[0].style.display = "none";
-            searchRender.getElesByClass("stop_main")[0].style.display = "none";
-            searchRender.getElesByClass("end_main")[0].style.display = "none";
-            searchRender.getElesByClass("guoGuan_main")[0].style.display = "none";
-            searchRender.getElesByClass("main_cont")[0].style.display = "block";
-            //开始运行----初始化
-            //倒计时
-            util.timer();
-            //颜色初始化
-            util.color(1);
-            util.score = 0;
-            searchRender.getElesByClass("h_score_one")[0].innerHTML = util.score;
-        },
-        color: function (n) {
-            var score = 0, self = this;
-            var h_score_one = searchRender.getElesByClass("h_score_one")[0];
-
-            function step() {
-                self.score = score;
-                var suiJiColor = searchRender.getRandomColor();
-                var color_cont_one = searchRender.getElesByClass("color_cont_one")[0];
-                var boxColor = [];
-
-                color_cont_one.innerHTML = '';
-                n++;
-                if (suiJiColor == "#F06060") {
-                    colorSelect();
-                } else {
-                    if (n >= 2 && n < 4) {
-                        for (var i = 0; i < n * n; i++) {
-                            var div = document.createElement("div");
-                            div.style.width = color_cont_one.offsetWidth / n + "px";
-                            div.style.height = color_cont_one.offsetWidth / n + "px";
-                            div.className = "colorList";
-                            boxColor.push(div);
-                            div.style.background = suiJiColor;
-                            color_cont_one.appendChild(div);
-                        }
-                        var index = Math.floor((Math.random() * boxColor.length));
-                        boxColor[index].style.opacity = 6 / 10;
-                        boxColor[index].onclick = function () {
-                            score++;
-                            h_score_one.innerHTML = score;
-                            step();
-                        }
-
-                    } else if (n >= 4 && n < 7) {
-                        for (var i = 0; i < 5 * 5; i++) {
-                            var div = document.createElement("div");
-                            div.style.width = color_cont_one.offsetWidth / 5 + "px";
-                            div.style.height = color_cont_one.offsetWidth / 5 + "px";
-                            div.className = "colorList";
-                            boxColor.push(div);
-                            div.style.background = suiJiColor;
-                            color_cont_one.appendChild(div);
-                        }
-                        var index = Math.floor((Math.random() * boxColor.length));
-                        boxColor[index].style.opacity = 6 / 10 + n / 100;
-                        boxColor[index].onclick = function () {
-                            score++;
-                            h_score_one.innerHTML = score;
-                            step();
-                        }
-                    } else if (n >= 7 && n < 10) {
-                        for (var i = 0; i < 6 * 6; i++) {
-                            var div = document.createElement("div");
-                            div.style.width = color_cont_one.offsetWidth / 6 + "px";
-                            div.style.height = color_cont_one.offsetWidth / 6 + "px";
-                            div.className = "colorList";
-                            boxColor.push(div);
-                            div.style.background = suiJiColor;
-                            color_cont_one.appendChild(div);
-                        }
-                        var index = Math.floor((Math.random() * boxColor.length));
-                        boxColor[index].style.opacity = 6 / 10 + n / 100;
-                        boxColor[index].onclick = function () {
-                            score++;
-                            h_score_one.innerHTML = score;
-                            step();
-                        }
-                    } else if (n >= 10 && n < 15) {
-                        for (var i = 0; i < 7 * 7; i++) {
-                            var div = document.createElement("div");
-                            div.style.width = color_cont_one.offsetWidth / 7 + "px";
-                            div.style.height = color_cont_one.offsetWidth / 7 + "px";
-                            div.className = "colorList";
-                            boxColor.push(div);
-                            div.style.background = suiJiColor;
-                            color_cont_one.appendChild(div);
-                        }
-                        var index = Math.floor((Math.random() * boxColor.length));
-                        boxColor[index].style.opacity = 6 / 10 + n / 100;
-                        boxColor[index].onclick = function () {
-                            score++;
-                            h_score_one.innerHTML = score;
-                            step();
-                        }
-                    } else if (n >= 15 && n < 25) {
-                        for (var i = 0; i < 8 * 8; i++) {
-                            var div = document.createElement("div");
-                            div.style.width = color_cont_one.offsetWidth / 8 + "px";
-                            div.style.height = color_cont_one.offsetWidth / 8 + "px";
-                            div.className = "colorList";
-                            boxColor.push(div);
-                            div.style.background = suiJiColor;
-                            color_cont_one.appendChild(div);
-                        }
-                        var index = Math.floor((Math.random() * boxColor.length));
-                        boxColor[index].style.opacity = 6 / 10 + n / 100;
-                        boxColor[index].onclick = function () {
-                            score++;
-                            h_score_one.innerHTML = score;
-                            step();
-                        }
-                    } else if (n >= 25 && n < 40) {
-                        for (var i = 0; i < 9 * 9; i++) {
-                            var div = document.createElement("div");
-                            div.style.width = color_cont_one.offsetWidth / 9 + "px";
-                            div.style.height = color_cont_one.offsetWidth / 9 + "px";
-                            div.className = "colorList";
-                            boxColor.push(div);
-                            div.style.background = suiJiColor;
-                            color_cont_one.appendChild(div);
-                        }
-                        var index = Math.floor((Math.random() * boxColor.length));
-                        boxColor[index].style.opacity = 6 / 10 + n / 100;
-                        boxColor[index].onclick = function () {
-                            score++;
-                            h_score_one.innerHTML = score;
-                            step();
-                        }
-                    } else if (n == 40) {
-                        searchRender.getElesByClass("main_cont")[0].style.display = "none";
-                        searchRender.getElesByClass("guoGuan_main")[0].style.display = "block";
-                    }
-
-                }
-            }
-
-            step();
-        }
-
-    };
-
     var searchRender = {
         getElesByClass: function (str, context) {
             context = context || document;
@@ -286,6 +100,166 @@
             return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6);
         }
     };
+    var color_cont_one = searchRender.getElesByClass("color_cont_one")[0],boxDivs=[],boxColor = [],score = 0,boxDivPool=[],h_score_one = searchRender.getElesByClass("h_score_one")[0];
+    var util = {//这里面写的基本上都是各各模块公用的方法
+        timer: function () {
+            var s = 60, self = this;
+
+            function times() {
+                s--;
+                self.s = s;
+                searchRender.getElesByClass("h_time_one")[0].innerHTML = s;
+                self.t = setTimeout(times, 1000);
+                if (s <= 0) {
+                    clearTimeout(self.t);
+                    self.t = null;
+                }
+            }
+
+            this.times = times;
+            times();
+        },
+        stop: function () {
+            clearTimeout(this.t);
+            this.t = null;
+        },
+        start: function () {
+            setTimeout(this.times, 1000);
+        },
+        end: function () {
+
+            var self = util;
+            if (self.s <= 0) {
+                if (self.score < 15) {
+                    searchRender.getElesByClass("end_title")[0].innerHTML = "蝙蝠";
+                } else if (self.score >= 15 && self.score < 28) {
+                    searchRender.getElesByClass("end_title")[0].innerHTML = "狗";
+                } else if (self.score >= 28 && self.score < 36) {
+                    searchRender.getElesByClass("end_title")[0].innerHTML = "狮子";
+                } else if (self.score >= 36) {
+                    searchRender.getElesByClass("end_title")[0].innerHTML = "鹰";
+                }
+                searchRender.getElesByClass("end_main")[0].style.display = "block";
+                searchRender.getElesByClass("end_score_one")[0].innerHTML = score;
+                 clearInterval(end_times);
+                 end_times=null;
+            }
+
+        },
+        showOrHide:function(){
+            searchRender.getElesByClass("start_main")[0].style.display = "none";
+            searchRender.getElesByClass("stop_main")[0].style.display = "none";
+            searchRender.getElesByClass("end_main")[0].style.display = "none";
+            searchRender.getElesByClass("guoGuan_main")[0].style.display = "none";
+            searchRender.getElesByClass("main_cont")[0].style.display = "block";
+            //开始运行----初始化
+            //倒计时
+            util.timer();
+            end_times=setInterval(util.end, 1000);
+            //颜色初始化
+            boxDivs=[];
+            boxColor=[];
+            boxDivPool=[];
+             color_cont_one.innerHTML='';
+            util.color(1);
+            score = 0;
+            searchRender.getElesByClass("h_score_one")[0].innerHTML = score;
+        },
+         objectPoolFactory :function( createObjFn ){
+          var objectPool = [];
+          return {
+            create: function(){
+                var obj = objectPool.length === 0 ?createObjFn.apply( this, arguments ) : objectPool.shift();
+                return obj;
+            },
+            recover: function( obj ){
+               objectPool.push( obj );
+            }
+          }
+        },
+        color: function (n) {
+            var self = this;
+            var oneTime=true,divBox=null;
+            function step() {
+                // self.score = score;
+                var suiJiColor = searchRender.getRandomColor();
+
+                // color_cont_one.innerHTML = '';
+
+                n++;
+                if (suiJiColor == "#F06060") {
+                    colorSelect();
+                } else {
+                    if(oneTime){
+                        divBox = util.objectPoolFactory( function(){
+                            var div = document.createElement( 'div' );
+                            document.body.appendChild( div );
+                            return div;
+                        });
+                        oneTime=false;
+                    }
+                    if (n >= 2 && n < 5) {
+                        select(n,divBox,suiJiColor,step,n);
+
+                    } else if (n >= 5 && n < 7) {
+                        select(n,divBox,suiJiColor,step,5);
+                        
+                    } else if (n >= 7 && n < 10) {
+                        select(n,divBox,suiJiColor,step,6);
+                       
+                    } else if (n >= 10 && n < 15) {
+                       select(n,divBox,suiJiColor,step,7);
+                       
+                    } else if (n >= 15 && n < 25) {
+                        select(n,divBox,suiJiColor,step,8);
+                        
+                    } else if (n >= 25 && n < 40) {
+                        select(n,divBox,suiJiColor,step,9);
+                    } else if (n == 40) {
+                        searchRender.getElesByClass("main_cont")[0].style.display = "none";
+                        searchRender.getElesByClass("guoGuan_main")[0].style.display = "block";
+                    }
+
+                }
+            }
+
+            step();
+        }
+
+    };
+
+    function  select(n,divBox,suiJiColor,step,number) {
+        for (var i = 0; i < number * number; i++) {
+            var divs=divBox.create();
+            divs.style.width = color_cont_one.offsetWidth / number + "px";
+            divs.style.height = color_cont_one.offsetWidth / number + "px";
+            divs.className = "colorList";
+            boxColor.push(divs);
+            boxDivs.push(divs);
+            boxDivPool.push(divBox);
+            divs.style.background = suiJiColor;
+            color_cont_one.appendChild(divs);
+        }
+        var index = Math.floor((Math.random() * boxColor.length));
+        boxColor[index].style.opacity = 6 / 10 ;
+        boxColor[index].onclick = function () {
+            score++;
+            h_score_one.innerHTML = score;
+            // boxColor[index].style.opacity = 1;
+            for(var k=0;k<boxDivPool.length;k++) {
+                if(k!=index){
+                    boxDivPool[k].recover(boxDivs[k]);
+                }else{
+                    color_cont_one.removeChild(boxDivs[k]);
+                }
+            }
+            boxDivs=[];
+            boxColor=[];
+            boxDivPool=[];
+            step();
+        }
+    }
+
 
     //点击暂停
     searchRender.getElesByClass("h_stop_one")[0].onclick = function () {
@@ -308,7 +282,7 @@
         //颜色初始化
         util.color(1);
     };
-    setInterval(util.end, 1000);
+    var end_times=setInterval(util.end, 1000);
     //再玩一次
     searchRender.getElesByClass("end_btn")[0].onclick = function () {
         util.showOrHide();
